@@ -1,3 +1,4 @@
+/* Creates folders & jobs under created folder */
 ['01_Builds','02_Fast_Track','03_Slow_Track','04_Stability_Track','05_Release_Track','06_Soak_Track'].each { 
     folder("$it") {
     }
