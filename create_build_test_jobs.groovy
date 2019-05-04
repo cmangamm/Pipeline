@@ -1,8 +1,10 @@
-build_folder_path="CMR-Workspace/01_Builds/"
-test_folder_path='CMR-Workspace/02_Fastrack/'
-Notify_path='CMR-Workspace/03_Deploy/'
+folder('CMR_Area/01_Builds')
+folder('CMR_Area/02_Fastrack')
+folder('CMR_Area/03_Deploy')
+build_folder_path="CMR_Area/01_Builds/"
+test_folder_path='CMR_Area/02_Fastrack/'
+Deploy_path='CMR_Area/03_Deploy/'
 
-def runScript=readFileFromWorkspace('print_numbers.sh')
 
 Build_list=[
   
@@ -31,9 +33,9 @@ Test_list=[
          'fast_dms_uk_xwing',
   
 ]
-Notify=[
+Deploy_list=[
   
-         'Notified_Job'
+         'Deploy_job'
 ]
 for (i in Build_list){
      
@@ -68,10 +70,13 @@ for (i in Build_list){
           
           //Creates First excute shell window
           shell("./print_even_odd_numbers.sh")//Run the script which was cloned,script in current working directory
-       
-          //Creates second execute shell window    
-          shell(runScript)//Excute script commands in shell window
-          
+		  shell("ls")
+          shell('echo "Name1: ",$Nam12"')
+          shell('echo "Name2: ",$Name2"')
+		  shell('echo "Name3: ",$Name3"')
+		  shell('echo "Name4: ",$Name4"')
+		  shell('echo "Name5: ",$Name5"')
+		  shell('echo "Name6: ",$Name6"')
         }
         //customWorkspace("/var/lib/jenkins/workspace/CMR-Workspace")<-- sets the common workspace for all build jobs
         
@@ -86,9 +91,9 @@ for (i in Build_list){
                pattern("*.sh")
            }
            extendedEmail{
-               recipientList("chandu80006@gmail.com","cmangamm@cisco.com")
-               defaultSubject("Release Notes for CMR's pipeline")
-               defaultContent("<html><body><H1>Hello ChandraMohanReddy</H1></body></html>")
+               recipientList("chandramohanreddy21@gmail.com","cmangamm@cisco.com")
+               defaultSubject("Build from $i")
+               defaultContent("<html><body><H1>Hey I am $i</H1></body></html>")
                contentType("text/html")
                triggers{
                  always{
@@ -135,10 +140,16 @@ for (i in Test_list){
         }
         steps{
           
-          shell("./print_even_odd_numbers.sh")//Run the script which was cloned,script in current working directory
-       
-          shell(runScript)//Excute script commands in shell window
           
+          //Creates First excute shell window
+          shell("./print_even_odd_numbers.sh")//Run the script which was cloned,script in current working directory
+		  shell("ls")
+          shell('echo "Name1: ",$Nam12"')
+          shell('echo "Name2: ",$Name2"')
+		  shell('echo "Name3: ",$Name3"')
+		  shell('echo "Name4: ",$Name4"')
+		  shell('echo "Name5: ",$Name5"')
+		  shell('echo "Name6: ",$Name6"')
         }
         //customWorkspace("/var/lib/jenkins/workspace/CMR-Workspace")<-- sets the common workspace for all test jobs
         // disabled(true) <-- disabled the job will not run until job is reenabled
@@ -151,9 +162,9 @@ for (i in Test_list){
                pattern("*.sh")
            }
            extendedEmail{
-               recipientList("chandu80006@gmail.com","cmangamm@cisco.com")
-               defaultSubject("Release Notes for CMR's pipeline")
-               defaultContent("<html><body><H1>Hello ChandraMohanReddy</H1></body></html>")
+				recipientList("chandramohanreddy21@gmail.com","cmangamm@cisco.com")
+               defaultSubject("Build from $i")
+               defaultContent("<html><body><H1>Hey I am $i</H1></body></html>")
                contentType("text/html")
                triggers{
                  always{
@@ -170,11 +181,11 @@ for (i in Test_list){
     
 }
 
-for (i in Notify){
+for (i in Deploy_list){
   
-  freeStyleJob("$Notify_path$i"){
+  freeStyleJob("$Deploy_path$i"){
     
-    description("This job sent mail on any occassion to receiptents")
+    description("I am $i")
    
     logRotator{
       
@@ -184,7 +195,15 @@ for (i in Notify){
         artifactNumToKeep(3)
         
     }
-    
+    parameters{
+    	stringParam("Name1","ChandraMohan Reddy","This is first parrameter")
+        stringParam("Name2","RaviKanth Reddy","This is second parrameter")
+        stringParam("Name3","Neelakanta Reddy","This is third parrameter")
+        stringParam("Name4","Hamsa Reddy","This is fourth parrameter")
+        stringParam("Name5","Vidhurnath Reddy","This is fifth parrameter")
+        stringParam("Name6","Sandhya Reddy","This is sixth parrameter")
+        booleanParam("Trigger_Build",true,"uncheck to not to run build")
+    }
     scm{
         github('cmangamm/Pipeline')
     }
@@ -192,8 +211,17 @@ for (i in Notify){
         githubPush()
     }
     steps{
-      
-        shell(runScript)
+          
+          //Creates First excute shell window
+          shell("./print_even_odd_numbers.sh")//Run the script which was cloned,script in current working directory
+		  shell("ls")
+          shell('echo "Name1: ",$Nam12"')
+          shell('echo "Name2: ",$Name2"')
+		  shell('echo "Name3: ",$Name3"')
+		  shell('echo "Name4: ",$Name4"')
+		  shell('echo "Name5: ",$Name5"')
+		  shell('echo "Name6: ",$Name6"')
+
       
     }
     publishers{
@@ -203,11 +231,11 @@ for (i in Notify){
         }
         extendedEmail{
             
-          recipientList("chandu80006@gmail.com","cmangamm@cisco.com")
-          defaultSubject("Release Notes from Notified Job")
-          defaultContent("<html><body></H1>Hello ChandraMohanReddy Mangammgari</H1></body></html>")
-          contentType("text/plain")
-          triggers{
+			recipientList("chandramohanreddy21@gmail.com","cmangamm@cisco.com")
+            defaultSubject("Build from $i")
+            defaultContent("<html><body><H1>Hey I am $i</H1></body></html>")
+            contentType("text/html")
+			triggers{
               always{
                   sendTo{               
                       recipientList()
@@ -219,5 +247,27 @@ for (i in Notify){
     }
                 
   }
+  
+}
+
+// create pipeline job fastrack workflow
+pipeline_list=[
+	'Fastrack_workflow'
+]
+for (i in pipeline_list){
+  
+  	pipelineJob("$test_folder_path$i"){
+
+  	    description("I am $i")
+   
+    	logRotator{
+      
+        	daysToKeep(2)
+        	numToKeep(5)
+        	artifactDaysToKeep(1)
+        	artifactNumToKeep(3)
+        
+    	}
+    }
   
 }
