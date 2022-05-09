@@ -40,4 +40,7 @@ pipeline{
       sandbox(true)
     }
   }
+  triggers {
+        githubPush()
+  }
 }
