@@ -16,3 +16,28 @@ for (i in l)
 println ("Job: $i")
 createJob(i)
 }
+pipelineJob("Test2/Synamedia2/workflow"){
+  def wf_script="""
+pipeline{ 
+  agent any 
+  stages{ 
+    stage('BuildStage'){
+      steps{
+             build "buildjob1" 
+      }
+    }
+    stage ('TestStage'){
+       steps{
+              build "testjob1"
+       }
+     }
+  }
+}
+"""
+  definition {
+    cps{
+      script(wf_script)
+      sandbox(true)
+    }
+  }
+}
