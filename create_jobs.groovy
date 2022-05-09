@@ -1,4 +1,4 @@
-sam = "sampath"
+sam = "cmr_dontDelete"
 B_FOLDER = "$sam/Builds"
 T_FOLDER = "$sam/Tests"
 folder("${B_FOLDER}")
