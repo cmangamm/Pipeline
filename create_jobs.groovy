@@ -37,7 +37,7 @@ pipeline{
   definition {
     cps{
       script(wf_script)
-      sandbox(true)
+      sandbox()
     }
   }
   triggers {
