@@ -6,7 +6,7 @@ def createJob(i)
   freeStyleJob("Test2/Synamedia2/$i")
   {
   scm {
-        github('jenkinsci/job-dsl-plugin', 'master')
+        github('cmangamm/Pipeline', 'master')
     }
   }
 }
